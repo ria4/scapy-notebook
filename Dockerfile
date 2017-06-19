@@ -14,14 +14,18 @@ RUN source activate py27 && \
     ipython kernel install --user
 
 # Install scapy-dev with dependencies
+#RUN git clone https://github.com/pyca/cryptography
+RUN git clone -b aead-ccm https://github.com/reaperhulk/cryptography
 RUN git clone -b sslv2 https://github.com/mtury/scapy
 USER root
 RUN apt-get update
-RUN apt-get install -yq libssl-dev
+RUN apt-get install -yq libssl-dev libffi-dev
 RUN source activate py27 && \
-    easy_install -q pip && \
-    pip install -q cryptography==1.7.2
+    cd cryptography && python setup.py -q install && cd ..
+#RUN source activate py27 && \
+#    easy_install -q pip && \
+#    pip install -q cryptography==1.7.2
 RUN source activate py27 && \
-    cd scapy && python setup.py -q install
+    cd scapy && python setup.py -q install && cd ..
 
 USER $NB_USER
