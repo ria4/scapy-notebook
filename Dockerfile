@@ -29,3 +29,4 @@ RUN source activate py27 && \
     cd scapy && python setup.py -q install && cd ..
 
 USER $NB_USER
+COPY test.ipynb .
