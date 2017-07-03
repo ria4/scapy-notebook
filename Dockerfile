@@ -29,4 +29,4 @@ RUN source activate py27 && \
     cd scapy && python setup.py -q install && cd ..
 
 USER $NB_USER
-COPY test.ipynb .
+COPY notebook1_x509.ipynb notebook2_tls_protected.ipynb notebook3_tls_compromised.ipynb ./
