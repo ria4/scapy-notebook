@@ -28,5 +28,10 @@ RUN source activate py27 && \
 RUN source activate py27 && \
     cd scapy && python setup.py -q install && cd ..
 
-USER $NB_USER
+# We want to trust the notebooks but there is a bug with Docker ownerships...
 COPY notebook1_x509.ipynb notebook2_tls_protected.ipynb notebook3_tls_compromised.ipynb ./
+RUN chown jovyan:users notebook1_x509.ipynb notebook2_tls_protected.ipynb notebook3_tls_compromised.ipynb
+USER $NB_USER
+RUN source activate py27 && \
+    ipython trust notebook1_x509.ipynb notebook2_tls_protected.ipynb notebook3_tls_compromised.ipynb
+ADD raw_data raw_data/
