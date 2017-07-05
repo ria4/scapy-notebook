@@ -22,16 +22,14 @@ RUN apt-get update
 RUN apt-get install -yq libssl-dev libffi-dev
 RUN source activate py27 && \
     cd cryptography && python setup.py -q install && cd ..
-#RUN source activate py27 && \
-#    easy_install -q pip && \
-#    pip install -q cryptography==1.7.2
 RUN source activate py27 && \
     cd scapy && python setup.py -q install && cd ..
 
 # We want to trust the notebooks but there is a bug with Docker ownerships...
-COPY notebook1_x509.ipynb notebook2_tls_protected.ipynb notebook3_tls_compromised.ipynb ./
-RUN chown jovyan:users notebook1_x509.ipynb notebook2_tls_protected.ipynb notebook3_tls_compromised.ipynb
+ADD notebooks notebooks/
+RUN chown -R jovyan:users notebooks
 USER $NB_USER
-RUN source activate py27 && \
-    ipython trust notebook1_x509.ipynb notebook2_tls_protected.ipynb notebook3_tls_compromised.ipynb
-ADD raw_data raw_data/
+RUN cd notebooks && \
+    source activate py27 && \
+    ipython trust notebook1_x509.ipynb notebook2_tls_protected.ipynb notebook3_tls_compromised.ipynb notebook4_tls13.ipynb && \
+    cd ..
