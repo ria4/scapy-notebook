@@ -31,5 +31,5 @@ RUN chown -R jovyan:users notebooks
 USER $NB_USER
 RUN cd notebooks && \
     source activate py27 && \
-    ipython trust notebook1_x509.ipynb notebook2_tls_protected.ipynb notebook3_tls_compromised.ipynb notebook4_tls13.ipynb && \
+    ipython trust notebook0_intro.ipynb notebook1_x509.ipynb notebook2_tls_protected.ipynb notebook3_tls_compromised.ipynb notebook4_tls13.ipynb && \
     cd ..
