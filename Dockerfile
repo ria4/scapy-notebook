@@ -1,7 +1,5 @@
 FROM jupyter/minimal-notebook
 
-MAINTAINER Max Tury "maxence.tury@ssi.gouv.fr"
-
 # Conda needs bash instead of dash
 USER root
 RUN ln -snf /bin/bash /bin/sh
